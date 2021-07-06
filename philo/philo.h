@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:10:21 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/03 16:09:59 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/06 20:12:56 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,24 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 # include <sys/time.h>
 
-# define STATUS_EA		0
-# define STATUS_SLEEP	1
-# define STATUS_FORK	2
-# define STATUS_THINK	3
+# define STATUS_THINK	0
+# define STATUS_EAT		1
+# define STATUS_SLEEP	2
+# define STATUS_FORK	3
 # define STATUS_DIED	4
 # define STATUS_SUCCESS	5
-# define BAD_ARGUMENT "Error: there must be either 4 or 5 arguments. those argument are: : number_of_philosophers, time_to_die, time_to_eat, time_to_sleep and optionaly [number_of_times_each_philosopher_must_eat]"
+# define BAD_ARGUMENT "Error: arguments not set properly.\n"
+# define MALLOC_ERROR "Problem: malloc could not give set memory.\n"
 
 struct	settings;
 
 typedef struct s_philo
 {
 	int				position;
-	int				last_meal;
+	u_int64_t		last_meal;
 	int				status;
 	int				r_fork;
 	int				l_fork;
@@ -42,16 +44,18 @@ typedef struct s_philo
 typedef struct s_settings
 {
 	int				philo_nb;
-	uint64_t		time_to_die;
-	uint64_t		time_to_eat;
-	uint64_t		time_to_sleep;
+	u_int64_t		time_to_die;
+	u_int64_t		time_to_eat;
+	u_int64_t		time_to_sleep;
 	int				meal_to_win;
-	uint64_t		start;
+	u_int64_t		start;
 	t_philo			*philos;
-}
+}				t_settings;
 
-int		ft_strlen(const char *s);
-int		ft_atoi(const char *s);
-void	ft_putnbr(uint64_t n);
+int			ft_strlen(const char *s);
+u_int64_t	ft_atoi(const char *s);
+void		ft_putnbr(u_int64_t n);
+int			exit_error(char *s);
+t_settings	*set_settings(int ac, char **av);
 
 #endif
