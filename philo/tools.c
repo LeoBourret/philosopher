@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 18:14:26 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/06 18:52:44 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/26 15:00:45 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ u_int64_t	ft_atoi(const char *str)
 			str[0] == '\f' || str[0] == ' ' || str[0] == '\r')
 		str++;
 	result = 0;
-	sign = (str[0] == '-' ? -1 : 1);
-	str = (str[0] == '-' || str[0] == '+') ? str + 1 : str;
+	if (str[0] == '-')
+		sign = -1;
+	else
+		sign = 1;
+	if (str[0] == '+' || str[0] == '-')
+		str++;
 	while (str[0] == '0')
 		str++;
 	while (str[i] != '\0' && (str[i] >= '0' && str[i] <= '9'))

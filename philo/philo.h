@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:10:21 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/06 20:12:56 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/26 16:02:32 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ struct	settings;
 
 typedef struct s_philo
 {
+	pthread_t		*thread;
 	int				position;
 	u_int64_t		last_meal;
 	int				status;
 	int				r_fork;
 	int				l_fork;
+	pthread_mutex_t	*mutex;
 	struct settings	*settings;
 }				t_philo;
 
