@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:10:21 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/26 16:02:32 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/27 12:20:54 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,11 @@ u_int64_t	ft_atoi(const char *s);
 void		ft_putnbr(u_int64_t n);
 int			exit_error(char *s);
 t_settings	*set_settings(int ac, char **av);
+
+/*
+** TIME MANAGEMENT FUNCTIONS
+*/
+u_int64_t		get_time(void);
+u_int64_t		get_exec_time(u_int64_t start);
 
 #endif

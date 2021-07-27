@@ -4,6 +4,13 @@
 
 int		main()
 {
-	printf("u_int64_t == %lu\n", sizeof(u_int64_t));
-	printf("atoi above neg ll == %lu\n", ft_atoi("9223372036854775807"));
+	u_int64_t start;
+
+	start = get_time();
+	printf("salut\n");
+	while (1)
+	{
+		printf("%llu\n", get_exec_time(start));
+		usleep(150000);
+	}
 }

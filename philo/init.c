@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 18:56:27 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/06 19:02:24 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/27 12:06:10 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ t_settings	*set_settings(int ac, char **av)
 		return (NULL);
 	return (settings);
 }
-

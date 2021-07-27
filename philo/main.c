@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:38:42 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/26 19:56:39 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/07/27 12:26:09 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,26 @@ void	*routine(void *philo_ptr)
 	pthread_mutex_lock(philo->mutex);
 	while (1)
 	{
-
+		
 	}
 	return (philo);
+}
+
+static int	start_thread(t_settings *set)
+{
+	int	i;
+	pthread_mutex_t	*mutex;
+
+	pthread_mutex_init(mutex, NULL);
+	set->start = get_time();
+	i = -1;
+	while (++i < set->philo_nb)
+	{
+		set->philos[i].mutex = mutex;
+		pthread_create(set->philos[i].thread,
+			NULL, routine, (void *)&set->philos[i]);
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -50,11 +67,6 @@ int	main(int ac, char **av)
 	set = set_settings(ac, av + 1);
 	if (!set)
 		return (exit_error(MALLOC_ERROR));
-	pthread_mutex_init(mutex, NULL);
-	i = -1;
-	while (++i < set->philo_nb)
-	{
-		set->philos[i].mutex = mutex;
-		pthread_create(set->philos[i].thread, NULL, routine, (void *)&set->philos[i]);
-	}
+	start_thread(set);
+	return (0);
 }
