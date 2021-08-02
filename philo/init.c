@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 18:56:27 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/27 12:06:10 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/08/02 13:01:09 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_settings	*set_settings(int ac, char **av)
 {
 	t_settings *settings;
 
+	(void)ac;
 	settings = malloc(sizeof(t_settings));
 	if (settings == NULL)
 		return (NULL);
@@ -38,7 +39,8 @@ t_settings	*set_settings(int ac, char **av)
 	settings->time_to_die = ft_atoi(av[1]);
 	settings->time_to_eat = ft_atoi(av[2]);
 	settings->time_to_sleep = ft_atoi(av[3]);
-	settings->meal_to_win = ft_atoi(av[4]);
+	if (ac == 6)
+		settings->meal_to_win = ft_atoi(av[4]);
 	settings->philos = malloc(sizeof(t_philo) * (settings->philo_nb));
 	if (settings->philos == NULL)
 		return (NULL);

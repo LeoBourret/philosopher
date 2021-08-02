@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:10:21 by lebourre          #+#    #+#             */
-/*   Updated: 2021/07/27 12:20:54 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/08/02 12:50:18 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_settings
 int			ft_strlen(const char *s);
 u_int64_t	ft_atoi(const char *s);
 void		ft_putnbr(u_int64_t n);
+int			exit_error(char *s);
+t_settings	*set_settings(int ac, char **av);
 int			exit_error(char *s);
 t_settings	*set_settings(int ac, char **av);
 
