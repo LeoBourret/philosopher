@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 18:56:27 by lebourre          #+#    #+#             */
-/*   Updated: 2021/08/02 13:01:09 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/08/05 23:30:34 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,20 @@ void	set_philo(t_settings *settings)
 	int	i;
 
 	i = -1;
+	pthread_mutex_init(&settings->philos[0].m_msg, NULL);
 	while (++i < settings->philo_nb)
 	{
 		settings->philos[i].position = i;
-		settings->philos[i].last_meal = 0;
 		settings->philos[i].status = 0;
-		settings->philos[i].r_fork = 1;
-		settings->philos[i].l_fork = 1;
+		settings->philos[i].meal_count = 0;
+		settings->philos[i].m_msg = settings->philos[0].m_msg;
+		pthread_mutex_init(&settings->philos[i].mutex, NULL);
+		pthread_mutex_init(&settings->philos[i].l_fork, NULL);
+		if (i != 0)
+			settings->philos[i].r_fork = settings->philos[i - 1].l_fork;
+		settings->philos[i].settings = settings;
 	}
+	settings->philos[0].r_fork = settings->philos[i - 1].l_fork;
 }
 
 t_settings	*set_settings(int ac, char **av)
@@ -44,5 +50,6 @@ t_settings	*set_settings(int ac, char **av)
 	settings->philos = malloc(sizeof(t_philo) * (settings->philo_nb));
 	if (settings->philos == NULL)
 		return (NULL);
+	set_philo(settings);
 	return (settings);
 }

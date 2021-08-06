@@ -6,7 +6,7 @@
 /*   By: lebourre <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 14:10:21 by lebourre          #+#    #+#             */
-/*   Updated: 2021/08/02 12:50:18 by lebourre         ###   ########.fr       */
+/*   Updated: 2021/08/05 22:56:40 by lebourre         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,26 @@
 # define STATUS_EAT		1
 # define STATUS_SLEEP	2
 # define STATUS_FORK	3
-# define STATUS_DIED	4
+# define STATUS_DEAD	4
 # define STATUS_SUCCESS	5
 # define BAD_ARGUMENT "Error: arguments not set properly.\n"
 # define MALLOC_ERROR "Problem: malloc could not give set memory.\n"
 
-struct	settings;
+struct	s_settings;
 
 typedef struct s_philo
 {
-	pthread_t		*thread;
 	int				position;
+	int				meal_count;
 	u_int64_t		last_meal;
+	u_int64_t		death_timer;
 	int				status;
-	int				r_fork;
-	int				l_fork;
-	pthread_mutex_t	*mutex;
-	struct settings	*settings;
+	pthread_mutex_t	mutex;
+	pthread_mutex_t	m_msg;
+	pthread_mutex_t	m_eat;
+	pthread_mutex_t	l_fork;
+	pthread_mutex_t	r_fork;
+	struct s_settings	*settings;
 }				t_philo;
 
 
@@ -61,6 +64,19 @@ int			exit_error(char *s);
 t_settings	*set_settings(int ac, char **av);
 int			exit_error(char *s);
 t_settings	*set_settings(int ac, char **av);
+
+
+/*
+** PRINTING FUNCTIONS
+*/
+void			print_messages(t_philo *philo, int status);
+
+/*
+** ROUTINE ACTION FUNCTIONS
+*/
+void			take_fork(t_philo *philo);
+void			eat(t_philo *philo);
+void			philo_sleep(t_philo *philo);
 
 /*
 ** TIME MANAGEMENT FUNCTIONS

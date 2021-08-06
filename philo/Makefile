@@ -2,7 +2,7 @@ NAME = philo
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
 PTHREAD = -pthread
-SRCS = main.c tools.c init.c exit.c
+SRCS = main.c messages.c tools.c init.c exit.c actions.c
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
@@ -12,7 +12,7 @@ compil_no_flag:
 	$(CC) -c $(SRCS)
 
 no_flag: compil_no_flag
-	$(CC) $(OBJS) -o $(NAME)
+	$(CC) -pthread $(OBJS) -o $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) -pthread $(OBJS) -o $(NAME)
