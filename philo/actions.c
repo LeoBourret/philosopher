@@ -14,7 +14,7 @@
 
 void	take_fork(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->r_fork);
+	pthread_mutex_lock(philo->r_fork);
 	print_messages(philo, STATUS_FORK);
 	pthread_mutex_lock(&philo->l_fork);
 	print_messages(philo, STATUS_FORK);
@@ -27,7 +27,9 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_exec_time(philo->settings->start);
 	philo->death_timer = philo->last_meal + philo->settings->time_to_die;
 	print_messages(philo, STATUS_EAT);
+	printf("hello\n");
 	usleep(philo->settings->time_to_eat * 1000);
+	printf("pouet\n");
 	philo->meal_count++;
 	philo->status = STATUS_SLEEP;
 	pthread_mutex_unlock(&philo->m_eat);
@@ -37,6 +39,6 @@ void	philo_sleep(t_philo *philo)
 {
 	print_messages(philo, STATUS_SLEEP);
 	pthread_mutex_unlock(&philo->l_fork);
-	pthread_mutex_unlock(&philo->r_fork);
+	pthread_mutex_unlock(philo->r_fork);
 	usleep(philo->settings->time_to_sleep * 1000);
 }

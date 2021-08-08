@@ -27,10 +27,10 @@ void	set_philo(t_settings *settings)
 		pthread_mutex_init(&settings->philos[i].mutex, NULL);
 		pthread_mutex_init(&settings->philos[i].l_fork, NULL);
 		if (i != 0)
-			settings->philos[i].r_fork = settings->philos[i - 1].l_fork;
+			settings->philos[i].r_fork = &settings->philos[i - 1].l_fork;
 		settings->philos[i].settings = settings;
 	}
-	settings->philos[0].r_fork = settings->philos[i - 1].l_fork;
+	settings->philos[0].r_fork = &settings->philos[i - 1].l_fork;
 }
 
 t_settings	*set_settings(int ac, char **av)
