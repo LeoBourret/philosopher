@@ -38,6 +38,7 @@ void	*philo_checker(void *philo_ptr)
 			> philo->death_timer)
 		{
 			print_messages(philo, STATUS_DEAD);
+			philo->settings->status= STATUS_DEAD;
 			return ((void *)0);
 		}
 		pthread_mutex_unlock(&philo->mutex);
@@ -86,6 +87,7 @@ static int	start_thread(t_settings *set)
 int	main(int ac, char **av)
 {
 	t_settings	*set;
+	u_int64_t	i;
 
 	if (ac < 5 || ac > 6 || check_arg(av + 1))
 		return (exit_error(BAD_ARGUMENT));
@@ -93,5 +95,17 @@ int	main(int ac, char **av)
 	if (!set)
 		return (exit_error(MALLOC_ERROR));
 	start_thread(set);
+	i = 0;
+	while (1)
+	{
+		if (set->status == STATUS_EAT)
+		{
+			while (i < ft_atoi(av[1]))
+			{
+				pthread_mutex_destroy(set->philos[i].r_fork);
+			}
+			return (0);
+		}
+	}
 	return (0);
 }

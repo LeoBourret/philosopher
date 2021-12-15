@@ -27,9 +27,7 @@ void	eat(t_philo *philo)
 	philo->last_meal = get_exec_time(philo->settings->start);
 	philo->death_timer = philo->last_meal + philo->settings->time_to_die;
 	print_messages(philo, STATUS_EAT);
-	printf("hello\n");
 	usleep(philo->settings->time_to_eat * 1000);
-	printf("pouet\n");
 	philo->meal_count++;
 	philo->status = STATUS_SLEEP;
 	pthread_mutex_unlock(&philo->m_eat);

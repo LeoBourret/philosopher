@@ -45,6 +45,7 @@ t_settings	*set_settings(int ac, char **av)
 	settings->time_to_die = ft_atoi(av[1]);
 	settings->time_to_eat = ft_atoi(av[2]);
 	settings->time_to_sleep = ft_atoi(av[3]);
+	settings->status = 0;
 	if (ac == 6)
 		settings->meal_to_win = ft_atoi(av[4]);
 	settings->philos = malloc(sizeof(t_philo) * (settings->philo_nb));

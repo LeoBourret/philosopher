@@ -26,7 +26,7 @@
 # define STATUS_DEAD	4
 # define STATUS_SUCCESS	5
 # define BAD_ARGUMENT "Error: arguments not set properly.\n"
-# define MALLOC_ERROR "Problem: malloc could not give set memory.\n"
+# define MALLOC_ERROR "Fatal error: malloc could not give set memory.\n"
 
 struct	s_settings;
 
@@ -54,12 +54,13 @@ typedef struct s_settings
 	u_int64_t		time_to_sleep;
 	int				meal_to_win;
 	u_int64_t		start;
+	int				status;
 	t_philo			*philos;
 }				t_settings;
 
 int			ft_strlen(const char *s);
 u_int64_t	ft_atoi(const char *s);
-void		ft_putnbr(u_int64_t n);
+void		ft_putnbr(u_int64_t m_msg);
 int			exit_error(char *s);
 t_settings	*set_settings(int ac, char **av);
 int			exit_error(char *s);
