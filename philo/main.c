@@ -73,13 +73,21 @@ static int	start_thread(t_settings *set)
 	pthread_t		tid;
 
 	set->start = get_time();
-	i = -1;
-	while (++i < set->philo_nb)
+	i = 0;
+	while (i < set->philo_nb)
 	{
 		if ((pthread_create(&tid, NULL, routine, (void *)&set->philos[i])) != 0)
 			return (1);
-		pthread_detach(tid);
 		usleep(100);
+		i += 2;
+	}
+	i = 1;
+	while (i < set->philo_nb)
+	{
+		if ((pthread_create(&tid, NULL, routine, (void *)&set->philos[i])) != 0)
+			return (1);
+		usleep(100);
+		i += 2;
 	}
 	return (0);
 }
