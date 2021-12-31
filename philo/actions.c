@@ -29,6 +29,8 @@ void	eat(t_philo *philo)
 	print_messages(philo, STATUS_EAT);
 	usleep(philo->settings->time_to_eat * 1000);
 	philo->meal_count++;
+	if (philo->meal_count == philo->settings->meal_to_win)
+		philo->settings->philos_win++;
 	philo->status = STATUS_SLEEP;
 	pthread_mutex_unlock(&philo->m_eat);
 }

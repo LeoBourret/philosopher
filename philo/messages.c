@@ -14,10 +14,8 @@
 
 void	print_messages(t_philo *philo, int status)
 {
-	static int	running = 1;
-
 	pthread_mutex_lock(&philo->m_msg);
-	if (running)
+	if (philo->settings->status != STATUS_DEAD)
 	{
 		if (status == STATUS_THINK)
 			printf("%lu\t%d is thinking.\n",
@@ -29,17 +27,13 @@ void	print_messages(t_philo *philo, int status)
 			printf("%lu\t%d has taken a fork.\n",
 					get_exec_time(philo->settings->start), philo->position + 1);
 		else if (status == STATUS_DEAD)
-		{
 			printf("%lu\t%d died.\n",
 				get_exec_time(philo->settings->start), philo->position + 1);
-			running = 0;
-		}
 		else if (status == STATUS_SLEEP)
 			printf("%lu\t%d is sleeping.\n",
 				get_exec_time(philo->settings->start), philo->position + 1);
-		else if (status == STATUS_SUCCESS)
-			printf("%lu\t philosophers have eaten enough.\n",
-				get_exec_time(philo->settings->start));
 	}
+	if (status == STATUS_DEAD)
+		philo->settings->status= STATUS_DEAD;
 	pthread_mutex_unlock(&philo->m_msg);
 }

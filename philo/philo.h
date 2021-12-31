@@ -55,16 +55,17 @@ typedef struct s_settings
 	int				meal_to_win;
 	u_int64_t		start;
 	int				status;
+	int				philos_win;
 	t_philo			*philos;
 }				t_settings;
 
-int			ft_strlen(const char *s);
-u_int64_t	ft_atoi(const char *s);
-void		ft_putnbr(u_int64_t m_msg);
-int			exit_error(char *s);
-t_settings	*set_settings(int ac, char **av);
-int			exit_error(char *s);
-t_settings	*set_settings(int ac, char **av);
+unsigned int	ft_strlen(const char *s);
+u_int64_t		ft_atoi(const char *s);
+void			ft_putnbr(u_int64_t m_msg);
+int				exit_error(char *s);
+t_settings		*set_settings(int ac, char **av);
+int				exit_error(char *s);
+t_settings		*set_settings(int ac, char **av);
 
 
 /*
@@ -84,5 +85,6 @@ void			philo_sleep(t_philo *philo);
 */
 u_int64_t		get_time(void);
 u_int64_t		get_exec_time(u_int64_t start);
+void			ft_usleep(u_int64_t ms_time);
 
 #endif

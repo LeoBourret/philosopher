@@ -14,14 +14,18 @@
 
 int	check_arg(char **av)
 {
-	u_int64_t	value;
+	int i;
+	int	j;
 
-	while (*av)
+	i = -1;
+	while (av[++i])
 	{
-		value = ft_atoi(*av);
-		if (value == 0)
-			return (1);
-		av++;
+		j = -1;
+		while (av[i][++j])
+		{
+			if (av[i][j] < '0' || av[i][j] > '9' || ft_strlen(av[i]) > 10)
+				return (1);
+		}
 	}
 	return (0);
 }
@@ -33,15 +37,14 @@ void	*philo_checker(void *philo_ptr)
 	philo = (t_philo *)philo_ptr;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->mutex);
+		pthread_mutex_lock(&philo->m_eat);
 		if (philo->status != STATUS_EAT && get_exec_time(philo->settings->start)
-			> philo->death_timer)
+			> philo->death_timer && philo->settings->status != STATUS_DEAD)
 		{
 			print_messages(philo, STATUS_DEAD);
-			philo->settings->status= STATUS_DEAD;
 			return ((void *)0);
 		}
-		pthread_mutex_unlock(&philo->mutex);
+		pthread_mutex_unlock(&philo->m_eat);
 		usleep(1000);
 	}
 }
@@ -52,11 +55,12 @@ void	*routine(void *philo_ptr)
 	pthread_t	tid;
 
 	philo = (t_philo *)philo_ptr;
+	if (philo->position % 2 == 0)
+		usleep(10000);
 	philo->last_meal = get_exec_time(philo->settings->start);
 	philo->death_timer = philo->last_meal + philo->settings->time_to_die;
 	if ((pthread_create(&tid, NULL, philo_checker, philo_ptr)) != 0)
 		return ((void *)1);
-	pthread_detach(tid);
 	while (1)
 	{
 		take_fork(philo);
@@ -79,15 +83,7 @@ static int	start_thread(t_settings *set)
 		if ((pthread_create(&tid, NULL, routine, (void *)&set->philos[i])) != 0)
 			return (1);
 		usleep(100);
-		i += 2;
-	}
-	i = 1;
-	while (i < set->philo_nb)
-	{
-		if ((pthread_create(&tid, NULL, routine, (void *)&set->philos[i])) != 0)
-			return (1);
-		usleep(100);
-		i += 2;
+		i++;
 	}
 	return (0);
 }
@@ -104,16 +100,11 @@ int	main(int ac, char **av)
 		return (exit_error(MALLOC_ERROR));
 	start_thread(set);
 	i = 0;
-	while (1)
-	{
-		if (set->status == STATUS_EAT)
+	while (set->status != STATUS_DEAD)
+		if (set->philos_win == set->philo_nb)
 		{
-			while (i < ft_atoi(av[1]))
-			{
-				pthread_mutex_destroy(set->philos[i].r_fork);
-			}
+			printf("Simulation is over, all philosopher have eaten %d times.\n", set->meal_to_win);
 			return (0);
 		}
-	}
 	return (0);
 }
