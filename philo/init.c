@@ -18,13 +18,14 @@ void	set_philo(t_settings *settings)
 
 	i = -1;
 	pthread_mutex_init(&settings->philos[0].m_msg, NULL);
+	pthread_mutex_init(&settings->philos[0].m_dead, NULL);
 	while (++i < settings->philo_nb)
 	{
 		settings->philos[i].position = i;
 		settings->philos[i].status = 0;
 		settings->philos[i].meal_count = 0;
 		settings->philos[i].m_msg = settings->philos[0].m_msg;
-		pthread_mutex_init(&settings->philos[i].mutex, NULL);
+		settings->philos[i].m_dead = settings->philos[0].m_dead;
 		pthread_mutex_init(&settings->philos[i].l_fork, NULL);
 		if (i != 0)
 			settings->philos[i].r_fork = &settings->philos[i - 1].l_fork;
@@ -35,7 +36,7 @@ void	set_philo(t_settings *settings)
 
 t_settings	*set_settings(int ac, char **av)
 {
-	t_settings *settings;
+	t_settings	*settings;
 
 	(void)ac;
 	settings = malloc(sizeof(t_settings));

@@ -12,7 +12,20 @@
 
 #include "philo.h"
 
-int		exit_error(char *s)
+void	exit_philo(t_settings *set)
+{
+	int i;
+
+	i = -1;
+	pthread_mutex_destroy(&set->philos[0].m_msg);
+	pthread_mutex_destroy(&set->philos[0].m_dead);
+	while (++i < set->philo_nb)
+		pthread_mutex_destroy(&set->philos[i].l_fork);
+	free(set->philos);
+	free(set);
+}
+
+int	exit_error(char *s)
 {
 	printf("%s\n", s);
 	return (0);

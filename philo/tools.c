@@ -15,7 +15,7 @@
 
 unsigned int	ft_strlen(const char *s)
 {
-	unsigned int len;
+	unsigned int	len;
 
 	len = 0;
 	while (s[len])
@@ -29,8 +29,8 @@ u_int64_t	ft_atoi(const char *str)
 	u_int64_t	result;
 
 	i = 0;
-	while (str[0] == '\t' || str[0] == '\n' || str[0] == '\v' ||
-			str[0] == '\f' || str[0] == ' ' || str[0] == '\r')
+	while (str[0] == '\t' || str[0] == '\n' || str[0] == '\v'
+		|| str[0] == '\f' || str[0] == ' ' || str[0] == '\r')
 		str++;
 	result = 0;
 	if (str[0] == '+' || str[0] == '-')
@@ -44,18 +44,18 @@ u_int64_t	ft_atoi(const char *str)
 
 u_int64_t	get_exec_time(u_int64_t start)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
-	gettimeofday(&tv,(struct timezone *)0);
-	return((tv.tv_sec * 1000LU + tv.tv_usec / 1000LU) - start);
+	gettimeofday(&tv, (struct timezone *)0);
+	return ((tv.tv_sec * 1000LU + tv.tv_usec / 1000LU) - start);
 }
 
 u_int64_t	get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
-	gettimeofday(&tv,(struct timezone *)0);
-	return(tv.tv_sec * 1000LU + tv.tv_usec / 1000LU);
+	gettimeofday(&tv, (struct timezone *) 0);
+	return (tv.tv_sec * 1000LU + tv.tv_usec / 1000LU);
 }
 
 void	ft_usleep(u_int64_t ms_time)

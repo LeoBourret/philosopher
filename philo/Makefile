@@ -6,8 +6,6 @@ SRCS = main.c messages.c tools.c init.c exit.c actions.c
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
-debug: $(OBJS)
-	$(CC) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
@@ -19,6 +17,9 @@ no_flag: compil_no_flag
 
 $(NAME): $(OBJS)
 	$(CC) -pthread $(OBJS) -o $(NAME)
+
+sani: $(OBJS)
+	$(CC) $(OBJS) -fsanitize=thread -g -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)

@@ -14,7 +14,7 @@
 
 int	check_arg(char **av)
 {
-	int i;
+	int	i;
 	int	j;
 
 	i = -1;
@@ -35,7 +35,7 @@ void	*philo_checker(void *philo_ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_ptr;
-	while (1)
+	while (philo->settings->status != STATUS_DEAD)
 	{
 		pthread_mutex_lock(&philo->m_eat);
 		if (philo->status != STATUS_EAT && get_exec_time(philo->settings->start)
@@ -47,6 +47,7 @@ void	*philo_checker(void *philo_ptr)
 		pthread_mutex_unlock(&philo->m_eat);
 		usleep(1000);
 	}
+	return ((void *)0);
 }
 
 void	*routine(void *philo_ptr)
@@ -61,7 +62,8 @@ void	*routine(void *philo_ptr)
 	philo->death_timer = philo->last_meal + philo->settings->time_to_die;
 	if ((pthread_create(&tid, NULL, philo_checker, philo_ptr)) != 0)
 		return ((void *)1);
-	while (1)
+	pthread_detach(tid);
+	while (philo->settings->status != STATUS_DEAD)
 	{
 		take_fork(philo);
 		eat(philo);
@@ -82,6 +84,7 @@ static int	start_thread(t_settings *set)
 	{
 		if ((pthread_create(&tid, NULL, routine, (void *)&set->philos[i])) != 0)
 			return (1);
+		pthread_detach(tid);
 		usleep(100);
 		i++;
 	}
@@ -101,10 +104,14 @@ int	main(int ac, char **av)
 	start_thread(set);
 	i = 0;
 	while (set->status != STATUS_DEAD)
+	{
 		if (set->philos_win == set->philo_nb)
 		{
-			printf("Simulation is over, all philosopher have eaten %d times.\n", set->meal_to_win);
+			printf("Simulation is over, all philosopher have eaten %d times.\n",
+				set->meal_to_win);
 			return (0);
 		}
+		usleep(10000);
+	}
 	return (0);
 }

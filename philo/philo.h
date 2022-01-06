@@ -37,7 +37,7 @@ typedef struct s_philo
 	u_int64_t		last_meal;
 	u_int64_t		death_timer;
 	int				status;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t m_dead;
 	pthread_mutex_t	m_msg;
 	pthread_mutex_t	m_eat;
 	pthread_mutex_t	l_fork;
